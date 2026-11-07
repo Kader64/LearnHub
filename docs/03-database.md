@@ -64,7 +64,10 @@ Seeded with a small list. Managed by Admin later.
 | Description | varchar(2000) | required |
 | ThumbnailUrl | varchar(500) null | external URL, see open items |
 | Level | varchar(20) | Beginner / Intermediate / Advanced |
-| Status | varchar(20) | Draft / Published / Unpublished |
+| Status | varchar(20) | Draft / Published / Unpublished / Suspended |
+| SuspendedAt | timestamptz null | |
+| SuspendedByUserId | uuid null FK → AppUser | the Admin |
+| SuspensionReason | varchar(500) null | shown to the teacher |
 | CreatedAt, UpdatedAt | timestamptz | |
 | PublishedAt | timestamptz null | |
 
@@ -192,6 +195,19 @@ row count. It doesn't depend on the current state of the exam.
 | RevocationReason | varchar(300) null | |
 
 Unique: `Code`, and `(StudentId, CourseId)`.
+
+### 3.14 AuditLog
+| Column | Type | Notes |
+|---|---|---|
+| Id | uuid PK | |
+| ActorUserId | uuid FK → AppUser | restrict delete |
+| Action | varchar(50) | UserDisabled, UserEnabled, UserRoleChanged, CourseSuspended, CourseRestored, CertificateRevoked, CertificateRestored, CategoryCreated... |
+| TargetType | varchar(30) | User, Course, Certificate, Category |
+| TargetId | uuid | |
+| Details | jsonb null | e.g. old and new role, reason |
+| CreatedAt | timestamptz | |
+
+Index: (TargetType, TargetId, CreatedAt DESC) and (ActorUserId, CreatedAt DESC).
 
 Code generation: cryptographically random, 8 characters from a 32-character
 alphabet without look-alike characters (no `0/O`, `1/I/L`), formatted as

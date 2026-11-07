@@ -148,3 +148,39 @@ Exam
 ### Revocation
 - Admin can revoke a certificate (e.g. cheating). A revoked code shows as "revoked".
 
+## 9. Admin
+
+### Users
+- List, search, and filter by role and status. View a user's counts
+  (courses, enrollments, certificates).
+- Disable or enable an account. Disabling revokes all of the user's refresh tokens.
+- Change a role between Student and Teacher. Changing a role also revokes
+  refresh tokens, so the new role applies at the next login (the old access token
+  lives at most 15 minutes).
+- Teacher → Student is blocked while the user owns any course.
+- Safeguards: an admin cannot disable or demote themselves, and admin accounts
+  cannot be disabled or modified through the UI at all (assumption).
+
+### Courses
+- List all courses in any status, with filters. Read-only view of the content.
+- Suspend a course with a required reason (shown to the teacher).
+- Restore a suspended course (it becomes Unpublished).
+
+### Certificates
+- Search by code or student name. Revoke with a required reason, or restore.
+
+### Categories
+- Create, rename and delete. Deletion is blocked while courses use the category.
+
+### Dashboard
+- Counts only: users by role, courses by status, enrollments, certificates issued.
+
+### Audit log
+- Every admin action (user disabled/enabled, role changed, course suspended/restored,
+  certificate revoked/restored, category created/renamed/deleted) writes an audit
+  record in the same transaction as the change.
+- The log is append-only. A viewer page (`/admin/audit`) is a planned improvement.
+
+### Out of scope for the MVP
+- Creating more admins, editing course content as admin, deleting users,
+  messaging teachers.
