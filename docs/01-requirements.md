@@ -77,40 +77,65 @@ Exam
       └── Answers (text, isCorrect)
 ```
 
-### Question type (confirmed)
+### Question type
 - Single choice only: each question has 2-6 answers, exactly one is correct.
 
-### Grading (confirmed)
+### Grading
 - Graded on the server.
 - Correct answers are never sent to the client before the attempt is submitted.
   Student-facing question DTOs have no `isCorrect` field.
 - Score = correct answers / total questions, as a percentage.
 - All questions have equal weight.
 
-### Publish validation (confirmed)
+### Publish validation
 - The exam has at least 1 question.
 - Every question has 2-6 answers and exactly one marked correct.
 
-### Exam settings (PROPOSED, awaiting confirmation)
+### Exam settings 
 
 | Setting | Proposed default |
 |---------|------------------|
 | Pass mark | 70%, set per exam by the teacher (range 0-100%) |
-| Attempts | Unlimited, with a 10-minute cooldown between attempts |
+| Attempts | Unlimited |
 | Time limit | Optional, per exam, enforced on the server |
 | Question order | Shuffled per attempt (answers shuffled too) |
-| Result shown | Score, pass/fail, which questions were wrong, but not the correct answers |
 | Unlock rule | All lessons completed |
 
+### Result visibility
+- After an attempt, the student sees **only**: score (%), pass/fail, and the pass mark.
+- No per-question feedback and no correct answers, on pass or fail.
+- Rationale: protects exam integrity, so answers can't be pieced together
+  across attempts or shared between students.
+- The API response for a submitted attempt has no question-level data.
+
 ## 8. Certificate
-TODO: not yet defined (contents, verification code, PDF generation).
 
-## 9. Open questions
-- Refresh token storage on the frontend (httpOnly cookie vs. memory/localStorage).
-- Whether students see correct answers after a failed attempt.
+### Issuing
+- Issued automatically on the first passing attempt for a course.
+- One certificate per student per course. Later attempts don't create new ones.
 
-## 10. Planned improvements
-- Multiple choice and true/false questions
-- File attachments for lessons (PDF, slides)
-- Course sections/modules
-- Teacher setting to reveal correct answers after an attempt
+### Contents
+- Student full name
+- Course title
+- Teacher name
+- Score (%) and completion date
+- Unique verification code (e.g. `LH-7K2M-9QXD`, random, not guessable)
+
+### PDF generation (confirmed)
+- PDF is generated **on demand** with QuestPDF when the student downloads it.
+- The database stores only the certificate record, which is the single source of truth.
+- No file storage is needed.
+
+### Snapshot rule
+- The certificate record stores the student name, course title and teacher name
+  as they were at issue time.
+- Renaming a course or changing a profile later does not alter issued certificates.
+
+### Verification
+- Public page `/verify/{code}` (no login) showing: valid/invalid/revoked,
+  student name, course title, date.
+- Rate-limited, and returns the same response for unknown codes (no code enumeration).
+
+### Revocation
+- Admin can revoke a certificate (e.g. cheating). A revoked code shows as "revoked".
+
