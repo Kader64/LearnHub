@@ -11,7 +11,7 @@ the project's unique domain.
 - Use ASP.NET Core Identity for users, roles and password hashing.
 - Register with `AddIdentityCore<AppUser>()` and `AddRoles<IdentityRole>()`
   (no Razor UI, since this is an API).
-- `AppUser` extends `IdentityUser` with `FullName` and `CreatedAt`.
+- `AppUser : IdentityUser<Guid>` extends `IdentityUser` with `FullName` and `CreatedAt`.
 - Issue JWTs from our own `TokenService`.
 - Authorize with roles and policies.
 - Seed the Admin account from environment variables.

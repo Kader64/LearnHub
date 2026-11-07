@@ -70,7 +70,7 @@ Implementation notes:
 ```
 Exam
  ├── passMarkPercent
- ├── maxAttempts          (optional, future)
+ ├── maxAttempts          (optional,  null = unlimited)
  ├── timeLimitMinutes     (optional)
  └── Questions (ordered)
       ├── text
@@ -93,10 +93,10 @@ Exam
 
 ### Exam settings 
 
-| Setting | Proposed default |
-|---------|------------------|
-| Pass mark | 70%, set per exam by the teacher (range 0-100%) |
-| Attempts | Unlimited |
+| Setting | Value |
+|---------|-------|
+| Pass mark | 70% by default, set per exam by the teacher (range 50-100%) |
+| Max attempts | Set per exam by the teacher. Default: **unlimited** |
 | Time limit | Optional, per exam, enforced on the server |
 | Question order | Shuffled per attempt (answers shuffled too) |
 | Unlock rule | All lessons completed |
@@ -107,6 +107,15 @@ Exam
 - Rationale: protects exam integrity, so answers can't be pieced together
   across attempts or shared between students.
 - The API response for a submitted attempt has no question-level data.
+
+### Attempt limit rules
+- Limit is per student per exam, counted over that student's attempts.
+- Every started attempt counts (Submitted and Expired too), so abandoning an
+  attempt does not give a free retry.
+- When the limit is reached, the student cannot start a new attempt and sees
+  "No attempts left".
+- Changing the limit applies to everyone from then on. Lowering it never
+  deletes existing attempts.
 
 ## 8. Certificate
 
