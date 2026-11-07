@@ -7,7 +7,7 @@ A learning platform where **teachers** publish courses, **students** learn from 
 ## Features
 
 - **Roles:** Student, Teacher and Admin (user management, course moderation)
-- **Courses:** Draft → Published → Unpublished, with ordered lessons (Markdown + optional video link)
+- **Courses:** Draft -> Published -> Unpublished, with ordered lessons (Markdown + optional video link)
 - **Learning:** enrollment and lesson progress tracking
 - **Exams:** single-choice questions, server-side grading, retry with cooldown
 - **Certificates:** PDF with a unique verification code
