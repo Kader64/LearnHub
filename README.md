@@ -35,8 +35,6 @@ learnhub/
 └── docker-compose.prod.yml   # Full stack: db + api + web
 ```
 
-## Getting started
-
 ### Prerequisites
 
 - [Docker](https://www.docker.com/)
@@ -47,17 +45,6 @@ learnhub/
 
 - [Requirements](./docs/01-requirements.md)
 - [Architecture decisions](./docs/adr/)
-
-## Roadmap
-
-- [x] Requirements and architecture decisions
-- [ ] Database design
-- [ ] API design
-- [ ] Authentication
-- [ ] Courses and lessons
-- [ ] Exams and certificates
-- [ ] Admin panel
-- [ ] CI pipeline
 
 ## License
 
