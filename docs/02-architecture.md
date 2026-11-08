@@ -30,14 +30,6 @@ Status: Draft
 Configuration comes from environment variables (`.env` locally, never committed).
 `.env.example` documents every key.
 
-| Key group | Examples |
-|---|---|
-| Database | connection string, DB user and password |
-| Auth | JWT signing key, issuer, audience, token lifetimes |
-| Seeding | Admin email and password |
-| Exam | none required in the MVP (no cooldown) |
-
-Secrets (DB password, JWT key, Admin credentials) are never hardcoded or committed.
 
 ## 4. Backend
 
@@ -50,17 +42,6 @@ HTTP request
   → Service      (business rules, transactions, resource authorization)
   → AppDbContext (EF Core, PostgreSQL)
 ```
-
-Rules:
-1. Controllers contain no business logic and never touch `AppDbContext`.
-2. Services depend on `AppDbContext` and on interfaces (`ICourseService`,
-   `ITokenService`, `ICertificatePdfGenerator`, `ICurrentUser`).
-3. Entities never leave the service layer. Services return DTOs.
-4. Ownership checks (is this teacher the owner of the course?) live in services,
-   not only in attribute-based authorization, because they need data.
-5. Services get the current user through `ICurrentUser` (wraps `HttpContext`),
-   so they stay testable.
-6. No repository layer. `AppDbContext` is the unit of work.
 
 ### 4.2 Folder layout
 
@@ -220,25 +201,7 @@ src/learnhub-web/src/
 └── types/
 ```
 
-### 5.2 Conventions
-- **TanStack Query** for all server state. React state/context for the auth session only.
-- **Axios** instance with `baseURL: '/api'` and `withCredentials: true`.
-  - Request interceptor: attaches the in-memory access token.
-  - Response interceptor: on 401, runs one shared in-flight refresh call, retries
-    the original request once, and otherwise redirects to login.
-- **Session start:** on app load, call `POST /api/auth/refresh`. If it succeeds,
-  the user is signed in. Show a loading state until it completes.
-- **Route guards:** `<RequireAuth roles={[...]}>` wraps protected routes. This is
-  UX only. The API enforces the real rules.
-- **Markdown** is rendered with a sanitizing renderer. Videos are embedded through an
-  iframe built from the parsed video ID, never from the raw URL.
-- **Errors:** a shared handler maps ProblemDetails to form field errors and toasts.
-- **Exam UI:** shows a countdown from `expiresAt`. The server is the authority on
-  time. The countdown is cosmetic.
-- **Teacher UI:** the exam settings form shows a hint that unlimited attempts
-  allow guessing by trial and error.
-
-### 5.3 Main routes
+### 5.2 Main routes
 
 | Route | Access |
 |---|---|
@@ -248,44 +211,3 @@ src/learnhub-web/src/
 | `/my-learning`, `/learn/:courseId`, `/exam/:courseId`, `/certificates` | Student, Teacher |
 | `/teach`, `/teach/courses/:id` | Teacher |
 | `/admin/users`, `/admin/courses`, `/admin/certificates` | Admin |
-
-## 6. Docker and CI
-
-- `docker-compose.yml` (development): PostgreSQL (+ optional pgAdmin) with a named volume.
-- `docker-compose.prod.yml`: `db`, a one-off `migrate` service (EF migrations bundle),
-  `api` (depends on `migrate`), and `web` (nginx).
-- API image: multi-stage build, runs as a non-root user.
-- Web image: Node build stage, then nginx serving the static files and proxying `/api`.
-- Health checks: the db and the API both define one, and `api` waits for a healthy db.
-- **GitHub Actions** on every pull request:
-  1. `dotnet build` and `dotnet test`
-  2. `npm ci`, lint, test and build
-  3. Build the Docker images
-
-## 7. Testing strategy
-
-- **Unit tests** (service rules that carry risk): grading, attempt limit, attempt
-  expiry, publish validation, refresh-token rotation and reuse detection, certificate code generation.
-- **Integration tests:** controllers through `WebApplicationFactory`, against a real
-  PostgreSQL (Testcontainers), because partial unique indexes and check constraints
-  don't work on the in-memory provider.
-- **Frontend:** component tests for the critical flows only (login, taking an exam).
-- Critical authorization cases (a teacher accessing another teacher's course, a
-  student reading `isCorrect`) get explicit integration tests.
-
-## 8. Security summary
-
-| Threat | Mitigation |
-|---|---|
-| XSS stealing credentials | Refresh token in httpOnly cookie, access token in memory, sanitized Markdown, iframe from parsed video ID |
-| CSRF | `SameSite=Strict` cookie scoped to `/api/auth` |
-| Token theft | 15 minute access tokens, rotation and reuse detection on refresh tokens |
-| Brute force on login | ASP.NET Identity lockout, rate limiting |
-| Certificate code guessing | Random 8-character code (~10^12 combinations), rate limiting, identical response for unknown codes |
-| Answer leakage | Separate student DTOs without `isCorrect`, score-only results |
-| Exam guessing by trial and error | Teacher-set attempt limit (default unlimited, a known trade-off documented in the UI) |
-| Unauthorized access | Policies plus ownership checks in services, 404 for hidden resources |
-
-## 9. Open items
-- Request validation approach (FluentValidation vs DataAnnotations), to be recorded as ADR-006.
-- Behaviour of a submit after expiry: grade the answers saved so far, or score as failed.
