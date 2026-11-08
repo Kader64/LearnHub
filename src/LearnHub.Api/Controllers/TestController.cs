@@ -10,7 +10,7 @@ public class TestController : ControllerBase
     [HttpGet]
     public IActionResult GetTest()
     {
-        return Ok("It works");
+        return Ok("it works");
     }
 
 }
