@@ -1,4 +1,4 @@
-import { BarChart3, BookOpen, User } from "lucide-react";
+import { BarChart3, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { Course } from "../examples/exampledata";
 

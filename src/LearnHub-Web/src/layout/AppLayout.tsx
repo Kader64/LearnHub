@@ -1,9 +1,6 @@
-import { Award, BookOpen, GraduationCap, LogOut, PenSquare, ShieldCheck } from "lucide-react";
+import { Award, BookOpen, GraduationCap, LogOut } from "lucide-react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import Logo from "../components/Logo";
-
-// EXAMPLE: logged-in user. Replace with real data from the auth context.
-const user = { name: "Jan Nowak", initials: "JN", role: "Teacher" };
 
 const links = [
   { to: "/courses", label: "Courses", icon: BookOpen },
