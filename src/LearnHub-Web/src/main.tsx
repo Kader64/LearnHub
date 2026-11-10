@@ -10,6 +10,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 
 import AppLayout from "./layout/AppLayout";
+import Courses from "./pages/student/Courses";
 
 
 createRoot(document.getElementById("root")!).render(
@@ -24,9 +25,8 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/register" element={<Register />} />
         </Route>
 
-        <Route path="/test" element={<AppLayout />}>
-          
-        
+        <Route element={<AppLayout />}>
+          <Route path="/courses" element={<Courses/>}/>
         </Route>
 
 
