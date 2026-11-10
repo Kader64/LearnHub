@@ -14,20 +14,24 @@ export default function MyLearning() {
     <>
       <PageHeader title="My learning" description="Courses you are enrolled in and your progress." />
 
-      <div className="space-y-4">
+      <ul className="divide-y divide-line border-y border-line">
         {enrollments.map(({ course, progress }) => (
-          <div key={course.id} className="card flex flex-col gap-5 p-5 sm:flex-row sm:items-center">
-            <div className={`h-20 w-full rounded-lg bg-linear-to-br sm:w-32 ${course.gradient}`} />
-            <div className="flex-1">
-              <h3 className="font-bold text-slate-900">{course.title}</h3>
-              <p className="text-sm text-slate-500">{course.teacher}</p>
+          <li key={course.id} className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:gap-8">
+            <div className="min-w-0 flex-1">
+              <Link to={`/courses/${course.id}`} className="font-bold text-ink hover:text-accent">
+                {course.title}
+              </Link>
+              <p className="text-sm text-muted">
+                {course.teacher} · {course.lessons} lessons
+              </p>
               <div className="mt-3 flex items-center gap-3">
-                <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
-                  <div className="h-full rounded-full bg-accent" style={{ width: `${progress}%` }} />
+                <div className="progress">
+                  <div className="progress-bar" style={{ width: `${progress}%` }} />
                 </div>
-                <span className="w-10 text-right text-sm font-semibold text-slate-600">{progress}%</span>
+                <span className="w-10 text-right text-sm font-semibold tabular-nums text-muted">{progress}%</span>
               </div>
             </div>
+
             {/* All lessons completed unlocks the exam */}
             {progress === 100 ? (
               <Link to={`/exam/${course.id}`} className="btn btn-primary">Take the exam</Link>
@@ -36,9 +40,9 @@ export default function MyLearning() {
                 {progress === 0 ? "Start course" : "Continue"}
               </Link>
             )}
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </>
   );
 }

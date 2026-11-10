@@ -1,4 +1,4 @@
-import { Award, Download, ExternalLink } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHeader from "../../components/PageHeader";
 import StatusBadge from "../../components/StatusBadge";
@@ -15,19 +15,18 @@ export default function Certificates() {
       <div className="grid gap-5 md:grid-cols-2">
         {mine.map((c) => (
           <div key={c.code} className="card p-6">
-            <div className="flex items-start justify-between">
-              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-soft text-accent">
-                <Award size={24} />
-              </span>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-bold text-ink">{c.course}</h3>
+                <p className="text-sm text-muted">Taught by {c.teacher}</p>
+              </div>
               <StatusBadge status={c.status} />
             </div>
-            <h3 className="mt-4 text-lg font-bold text-slate-900">{c.course}</h3>
-            <p className="text-sm text-slate-500">Taught by {c.teacher}</p>
 
-            <dl className="mt-4 grid grid-cols-3 gap-4 border-t border-slate-100 pt-4 text-sm">
-              <div><dt className="text-slate-400">Score</dt><dd className="font-semibold">{c.score}%</dd></div>
-              <div><dt className="text-slate-400">Issued</dt><dd className="font-semibold">{c.date}</dd></div>
-              <div><dt className="text-slate-400">Code</dt><dd className="font-mono text-xs font-semibold">{c.code}</dd></div>
+            <dl className="mt-5 grid grid-cols-3 gap-4 border-t border-line pt-4 text-sm">
+              <div><dt className="text-muted">Score</dt><dd className="font-semibold text-ink">{c.score}%</dd></div>
+              <div><dt className="text-muted">Issued</dt><dd className="font-semibold text-ink">{c.date}</dd></div>
+              <div><dt className="text-muted">Code</dt><dd className="font-mono text-xs font-semibold text-ink">{c.code}</dd></div>
             </dl>
 
             <div className="mt-5 flex gap-3">
@@ -44,7 +43,7 @@ export default function Certificates() {
       </div>
 
       {/* VARIANT: student has no certificates yet
-      <div className="card p-12 text-center text-slate-500">You have no certificates yet. Pass an exam to earn one.</div>
+      <p className="py-12 text-center text-muted">You have no certificates yet. Pass an exam to earn one.</p>
       */}
     </>
   );
