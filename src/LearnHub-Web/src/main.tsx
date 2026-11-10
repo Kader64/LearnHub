@@ -11,7 +11,12 @@ import Register from "./pages/auth/Register";
 
 import AppLayout from "./layout/AppLayout";
 import Courses from "./pages/student/Courses";
-
+import CourseDetails from "./pages/student/CourseDetails";
+import MyLearning from "./pages/student/MyLearning";
+import Lesson from "./pages/student/Lesson";
+import Exam from "./pages/student/Exam";
+import ExamResult from "./pages/student/ExamResult";
+import Certificates from "./pages/student/Certificates";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -26,9 +31,14 @@ createRoot(document.getElementById("root")!).render(
         </Route>
 
         <Route element={<AppLayout />}>
-          <Route path="/courses" element={<Courses/>}/>
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/:id" element={<CourseDetails />} />
+          <Route path="/my-learning" element={<MyLearning />} />
+          <Route path="/learn/:courseId" element={<Lesson />} />
+          <Route path="/exam/:courseId" element={<Exam />} />
+          <Route path="/exam/:courseId/result" element={<ExamResult />} />
+          <Route path="/certificates" element={<Certificates />} />
         </Route>
-
 
         <Route path="*" element={<NotFound />} />
       </Routes>

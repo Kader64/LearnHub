@@ -32,7 +32,7 @@ export default function Courses() {
           <button
             key={name}
             className={`rounded-full px-4 py-1.5 text-sm font-semibold transition ${
-              i === 0 ? "bg-accent text-white" : "bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-100"
+              i === 0 ? "bg-accent text-white" : "bg-white text-slate-500 ring-1 ring-slate-200 hover:bg-slate-100"
             }`}
           >
             {name}
