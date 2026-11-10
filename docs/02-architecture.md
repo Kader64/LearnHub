@@ -184,30 +184,3 @@ Rules:
 | Migrations | Applied automatically at startup in development only. In production they run as a one-off step (EF migrations bundle) |
 | Seeding | Roles, categories and the Admin account, on startup. The Admin password comes from environment variables |
 | Certificate PDF | QuestPDF, community license set at startup, rendered on demand from the certificate record |
-
-## 5. Frontend
-
-### 5.1 Structure (feature-based)
-
-```
-src/learnhub-web/src/
-├── api/          # axios instance, interceptors, typed endpoint functions
-├── app/          # router, providers (Auth, QueryClient), layouts
-├── features/     # auth, courses, learning, exams, certificates, admin
-│   └── <feature>/ { components, hooks, pages, api }
-├── components/   # shared UI primitives (Button, Modal, Input...)
-├── hooks/
-├── lib/          # helpers (formatting, markdown rendering)
-└── types/
-```
-
-### 5.2 Main routes
-
-| Route | Access |
-|---|---|
-| `/`, `/courses`, `/courses/:id` | public |
-| `/verify/:code` | public |
-| `/login`, `/register` | public |
-| `/my-learning`, `/learn/:courseId`, `/exam/:courseId`, `/certificates` | Student, Teacher |
-| `/teach`, `/teach/courses/:id` | Teacher |
-| `/admin/users`, `/admin/courses`, `/admin/certificates` | Admin |
