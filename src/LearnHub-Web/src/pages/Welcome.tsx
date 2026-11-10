@@ -15,10 +15,10 @@ export default function Welcome() {
         </Link>
       </header>
 
-      <main className="mx-auto flex w-full max-w-7xl flex-1 items-center gap-12 px-6 py-12">
+      <main className="mx-auto flex w-full max-w-7xl flex-1 gap-12 px-6 py-12">
         <div className="max-w-2xl">
           <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl">
-            Learn new skills.
+            Learn <span className="text-accent">new skills</span>
             <br />
             Prove them with a certificate.
           </h1>
