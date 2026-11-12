@@ -18,12 +18,16 @@ import Exam from "./pages/student/Exam";
 import ExamResult from "./pages/student/ExamResult";
 import Certificates from "./pages/student/Certificates";
 
+import TeacherCourses from "./pages/teacher/TeacherCourses";
+import CourseEditor from "./pages/teacher/CourseEditor";
+import LessonEditor from "./pages/teacher/LessonEditor";
+import ExamEditor from "./pages/teacher/ExamEditor";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Welcome />} />
-        {/* TODO Code verification */}
 
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
@@ -38,6 +42,12 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/exam/:courseId" element={<Exam />} />
           <Route path="/exam/:courseId/result" element={<ExamResult />} />
           <Route path="/certificates" element={<Certificates />} />
+
+          <Route path="/teach/courses" element={<TeacherCourses />} />
+          <Route path="/teach/courses/new" element={<CourseEditor />} />
+          <Route path="/teach/courses/:id" element={<CourseEditor />} />
+          <Route path="/teach/courses/:id/lessons/:lessonId" element={<LessonEditor />} />
+          <Route path="/teach/courses/:id/exam" element={<ExamEditor />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
