@@ -30,14 +30,14 @@ import AdminCourses from "./pages/admin/AdminCourses";
 import AdminCertificates from "./pages/admin/AdminCertificates";
 import Categories from "./pages/admin/Categories";
 import AuditLog from "./pages/admin/AuditLog";
+import Verify from "./pages/Verify";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Welcome />} />
-        {/* TODO */}
-        {/* <Route path="/verify/:code" element={<Verify />} /> */}
+        <Route path="/verify/:code" element={<Verify />} />
 
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
