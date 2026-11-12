@@ -23,11 +23,21 @@ import CourseEditor from "./pages/teacher/CourseEditor";
 import LessonEditor from "./pages/teacher/LessonEditor";
 import ExamEditor from "./pages/teacher/ExamEditor";
 
+import AdminLayout from "./layout/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import Users from "./pages/admin/Users";
+import AdminCourses from "./pages/admin/AdminCourses";
+import AdminCertificates from "./pages/admin/AdminCertificates";
+import Categories from "./pages/admin/Categories";
+import AuditLog from "./pages/admin/AuditLog";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Welcome />} />
+        {/* TODO */}
+        {/* <Route path="/verify/:code" element={<Verify />} /> */}
 
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
@@ -48,6 +58,15 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/teach/courses/:id" element={<CourseEditor />} />
           <Route path="/teach/courses/:id/lessons/:lessonId" element={<LessonEditor />} />
           <Route path="/teach/courses/:id/exam" element={<ExamEditor />} />
+        </Route>
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="users" element={<Users />} />
+          <Route path="courses" element={<AdminCourses />} />
+          <Route path="certificates" element={<AdminCertificates />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="audit" element={<AuditLog />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
