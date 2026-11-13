@@ -39,11 +39,17 @@ export default function AdminCourses() {
                 <td className="td">{c.students}</td>
                 <td className="td">
                   <div className="flex justify-end gap-2">
-                    <button className="btn btn-secondary btn-sm"><Eye size={14} /> View</button>
+                    <button className="btn btn-secondary btn-sm">
+                      <Eye size={14} /> View
+                    </button>
                     {c.status === "Suspended" ? (
-                      <button className="btn btn-secondary btn-sm text-success"><RotateCcw size={14} /> Restore</button>
+                      <button className="btn btn-secondary btn-sm text-success w-28 justify-center">
+                        <RotateCcw size={14} /> Restore
+                      </button>
                     ) : (
-                      <button className="btn btn-secondary btn-sm text-danger"><ShieldOff size={14} /> Suspend</button>
+                      <button className="btn btn-secondary btn-sm text-danger w-28 justify-center">
+                        <ShieldOff size={14} /> Suspend
+                      </button>
                     )}
                   </div>
                 </td>
@@ -53,14 +59,7 @@ export default function AdminCourses() {
         </table>
       </div>
 
-      {/* Suspend dialog (a reason is required and shown to the teacher):
-      <div className="card mt-6 max-w-lg p-6">
-        <h2 className="font-bold text-ink">Suspend course</h2>
-        <label className="label mt-4">Reason</label>
-        <textarea className="input min-h-24" />
-        <button className="btn btn-danger mt-4">Suspend</button>
-      </div>
-      */}
+      {/* TODO: Change to display with smooth animation pop up with suspend reason textbox:*/}
     </>
   );
 }

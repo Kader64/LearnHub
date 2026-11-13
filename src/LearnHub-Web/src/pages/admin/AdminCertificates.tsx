@@ -35,9 +35,13 @@ export default function AdminCertificates() {
                 <td className="td"><StatusBadge status={c.status} /></td>
                 <td className="td text-right">
                   {c.status === "Revoked" ? (
-                    <button className="btn btn-secondary btn-sm text-success"><RotateCcw size={14} /> Restore</button>
+                    <button className="btn btn-secondary btn-sm text-success w-28 justify-center">
+                      <RotateCcw size={14} /> Restore
+                    </button>
                   ) : (
-                    <button className="btn btn-secondary btn-sm text-danger"><ShieldOff size={14} /> Revoke</button>
+                    <button className="btn btn-secondary btn-sm text-danger w-28 justify-center">
+                      <ShieldOff size={14} /> Revoke
+                    </button>
                   )}
                 </td>
               </tr>

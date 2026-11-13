@@ -43,16 +43,21 @@ export default function Users() {
                 <td className="td">{u.certificates}</td>
                 <td className="td"><StatusBadge status={u.active ? "Active" : "Disabled"} /></td>
                 <td className="td">
-                  {/* Admin accounts cannot be modified through the UI, so no actions for them. */}
                   {u.role === "Admin" ? (
                     <span className="block text-right text-xs text-muted">Protected</span>
                   ) : (
                     <div className="flex justify-end gap-2">
-                      <button className="btn btn-secondary btn-sm"><UserCog size={14} /> Role</button>
+                      <button className="btn btn-secondary btn-sm">
+                        <UserCog size={14} /> Role
+                      </button>
                       {u.active ? (
-                        <button className="btn btn-secondary btn-sm text-danger"><Ban size={14} /> Disable</button>
+                        <button className="btn btn-secondary btn-sm text-danger w-24 justify-center">
+                          <Ban size={14} /> Disable
+                        </button>
                       ) : (
-                        <button className="btn btn-secondary btn-sm text-success"><UserCheck size={14} /> Enable</button>
+                        <button className="btn btn-secondary btn-sm text-success w-24 justify-center">
+                          <UserCheck size={14} /> Enable
+                        </button>
                       )}
                     </div>
                   )}

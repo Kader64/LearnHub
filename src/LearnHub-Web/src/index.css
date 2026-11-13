@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
+/* Color palette. Use only these colors in components. */
 @theme {
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
@@ -10,15 +11,22 @@
   --color-accent-soft: #e6f3f4;
 
   /* Text */
-  --color-ink: #0f172a; /* headings, strong text */
-  --color-body: #334155; /* normal text */
-  --color-muted: #64748b; /* secondary text, icons */
-  --color-faint: #94a3b8; /* placeholders, disabled */
+  --color-ink: #0f172a;
+  /* headings, strong text */
+  --color-body: #334155;
+  /* normal text */
+  --color-muted: #64748b;
+  /* secondary text, icons */
+  --color-faint: #94a3b8;
+  /* placeholders, disabled */
 
   /* Surfaces and lines */
-  --color-page: #f8fafc; /* page background, hover background */
-  --color-line: #e2e8f0; /* dividers, card borders */
-  --color-line-strong: #cbd5e1; /* input and button borders */
+  --color-page: #f8fafc;
+  /* page background, hover background */
+  --color-line: #e2e8f0;
+  /* dividers, card borders */
+  --color-line-strong: #cbd5e1;
+  /* input and button borders */
 
   /* Status */
   --color-success: #047857;
@@ -36,36 +44,107 @@
 }
 
 @layer components {
+
+  /* Typography */
   .page-title {
     @apply text-2xl font-extrabold tracking-tight text-ink sm:text-3xl;
   }
+
   .section-title {
     @apply text-xl font-bold text-ink;
   }
+
   .link {
     @apply font-semibold text-accent hover:text-accent-dark;
   }
+
+  /* Buttons */
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 disabled:cursor-not-allowed disabled:opacity-50;
   }
+
   .btn-primary {
     @apply bg-accent text-white hover:bg-accent-dark;
   }
+
   .btn-secondary {
     @apply border border-line-strong bg-white text-body hover:bg-page;
   }
+
+  /* Borderless button for table rows */
+  .btn-ghost {
+    @apply text-body hover:bg-line/60;
+  }
+
+  .btn-ghost-danger {
+    @apply text-danger hover:bg-danger-soft;
+  }
+
+  .btn-ghost-success {
+    @apply text-success hover:bg-success-soft;
+  }
+
+  .btn-danger {
+    @apply bg-danger text-white hover:bg-danger/90;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5;
+  }
+
+  /* Small icon-only button (reorder, edit, delete) */
+  .icon-btn {
+    @apply rounded-md p-1.5 text-muted transition hover:bg-page hover:text-ink disabled:cursor-not-allowed disabled:opacity-30;
+  }
+
+  .icon-btn-danger {
+    @apply text-danger hover:bg-danger-soft hover:text-danger;
+  }
+
+  /* Forms */
   .input {
     @apply w-full rounded-lg border border-line-strong bg-white px-3.5 py-2.5 text-sm placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20;
   }
   .label {
     @apply mb-1.5 block text-sm font-semibold text-ink;
   }
+
+  /* Containers */
   .card {
     @apply rounded-lg border border-line bg-white;
   }
+
+  .alert-danger {
+    @apply rounded-lg border border-danger/20 bg-danger-soft px-4 py-3 text-sm text-danger;
+  }
+
+  /* Tables: <div class="card overflow-x-auto"><table class="w-full"><thead class="table-head">...<tbody class="table-body"> */
+  .table-head {
+    @apply border-b border-line bg-page;
+  }
+
+  .table-body {
+    @apply divide-y divide-line;
+  }
+
+  .th {
+    @apply whitespace-nowrap px-5 py-3.5 text-left text-sm font-semibold text-muted;
+  }
+
+  .td {
+    @apply px-5 py-4 text-[15px];
+  }
+
+  /* Search + filters above a table */
+  .toolbar {
+    @apply mb-5 flex flex-col gap-3 sm:flex-row;
+  }
+
+  /* Progress bar: <div class="progress"><div class="progress-bar" style={{ width }} /></div> */
   .progress {
     @apply h-1.5 flex-1 overflow-hidden rounded-full bg-line;
   }
+
   .progress-bar {
     @apply h-full rounded-full bg-accent;
   }
