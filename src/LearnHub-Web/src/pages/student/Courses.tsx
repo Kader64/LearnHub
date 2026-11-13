@@ -16,7 +16,10 @@ export default function Courses() {
 
       <div className="mb-5 flex flex-col gap-3 sm:flex-row">
         <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" size={18} />
+          <Search
+            className="absolute left-3.5 top-1/2 -translate-y-1/2 text-faint"
+            size={18}
+          />
           <input className="input pl-10" placeholder="Search courses..." />
         </div>
         <select className="input sm:w-48">
@@ -25,6 +28,11 @@ export default function Courses() {
           <option>Intermediate</option>
           <option>Advanced</option>
         </select>
+        <select className="input sm:w-48">
+          <option>Sort by: Newest</option>
+          <option>Sort by: Oldest</option>
+          <option>Title: A-Z</option>
+        </select>
       </div>
 
       <div className="mb-8 flex flex-wrap gap-2">
@@ -32,7 +40,9 @@ export default function Courses() {
           <button
             key={name}
             className={`rounded-full px-4 py-1.5 text-sm font-semibold transition ${
-              i === 0 ? "bg-accent text-white" : "bg-white text-muted ring-1 ring-line hover:bg-accent-soft hover:text-accent-dark"
+              i === 0
+                ? "bg-accent text-white"
+                : "bg-white text-muted ring-1 ring-line hover:bg-accent-soft hover:text-accent-dark"
             }`}
           >
             {name}
@@ -48,9 +58,13 @@ export default function Courses() {
 
       {/* Pagination (API returns page, pageSize, totalCount) */}
       <div className="mt-10 flex items-center justify-center gap-2">
-        <button className="btn btn-secondary" disabled>Previous</button>
+        <button className="btn btn-secondary" disabled>
+          Previous
+        </button>
         <span className="px-3 text-sm text-muted">Page 1 of 1</span>
-        <button className="btn btn-secondary" disabled>Next</button>
+        <button className="btn btn-secondary" disabled>
+          Next
+        </button>
       </div>
     </>
   );

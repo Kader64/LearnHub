@@ -32,7 +32,7 @@ export default function AuditLog() {
       </div>
 
       <div className="card overflow-x-auto">
-        <table className="w-full min-w-[760px]">
+        <table className="w-full min-w-190">
           <thead className="table-head">
             <tr>
               <th className="th">Time</th>
