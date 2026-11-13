@@ -8,13 +8,28 @@ export default function AdminCertificates() {
     <>
       <PageHeader title="Certificates" description="Search by code or student name. Revoke with a reason, or restore." />
 
-      <div className="relative mb-5 max-w-md">
-        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" size={18} />
-        <input className="input pl-10" placeholder="Code or student name..." />
+      <div className="mb-5 flex flex-col gap-3 sm:flex-row">
+        <div className="relative flex-1">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-faint" size={18} />
+          <input className="input pl-10" placeholder="Code or student name..." />
+        </div>
+        <select className="input sm:w-40">
+          <option>All students</option>
+          {/* Add student options here or dynamically map them */}
+        </select>
+        <select className="input sm:w-40">
+          <option>All courses</option>
+          {/* Add course options here or dynamically map them */}
+        </select>
+        <select className="input sm:w-40">
+          <option>All statuses</option>
+          <option>Valid</option>
+          <option>Revoked</option>
+        </select>
       </div>
 
       <div className="card overflow-x-auto">
-        <table className="w-full min-w-[760px]">
+        <table className="w-full min-w-190">
           <thead className="table-head">
             <tr>
               <th className="th">Code</th>
