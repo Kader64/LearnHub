@@ -13,7 +13,7 @@ const links = [
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
   `flex items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-semibold transition ${
-    isActive ? "bg-accent-soft text-accent-dark" : "text-slate-500 hover:text-black"
+    isActive ? "bg-accent-soft text-accent-dark" : "text-slate-500 hover:bg-line/60 hover:text-ink"
   }`;
 
 export default function AppLayout() {
