@@ -1,0 +1,20 @@
+TODO:
+
+1. Starting page 
+
+2. Make login and register bigger around 10% (like 10% zoom)\
+
+3. Add searchbar to Mylearning page??
+
+4. Admin panel pagination on bottom each page
+
+5, Fix admin text on Learhub logo admin page
+
+6. Remove hover effect on courses and mylearing on mobile devices?? (not it will not affect user UX?)
+
+
+add time of each lesson to DB
+Verify pagesohuld contain textbox for certificate code and infomation will be displayed bellow
+
+
+View certificatewill show certificate preview or navigate to myvertificates 	

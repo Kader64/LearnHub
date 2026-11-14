@@ -1,6 +1,7 @@
 import { BarChart3, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { Course } from "../examples/exampledata";
+import CourseCover from "./CourseCover";
 
 export default function CourseCard({ course }: { course: Course }) {
   return (
@@ -8,14 +9,11 @@ export default function CourseCard({ course }: { course: Course }) {
       to={`/courses/${course.id}`}
       className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
     >
-      <div
-        className={`relative h-40 w-full overflow-hidden bg-linear-to-br ${course.gradient}`}
-      >
+      <CourseCover cover={course} className="h-40">
         <span className="absolute bottom-0 left-0 z-20 rounded-tr-xl bg-white px-4 py-2 text-xs font-bold text-slate-700">
           {course.category}
         </span>
-        <BookOpen className="absolute -bottom-6 -right-4 h-32 w-32 text-white/15 transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-110" />
-      </div>
+      </CourseCover>
 
       <div className="flex flex-1 flex-col p-5">
         <h3 className="text-lg font-bold leading-tight text-slate-900 transition-colors">

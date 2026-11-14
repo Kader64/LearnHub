@@ -62,7 +62,10 @@ Seeded with a small list. Managed by Admin later.
 | CategoryId | uuid FK → Category | restrict delete |
 | Title | varchar(150) | required |
 | Description | varchar(2000) | required |
-| ThumbnailUrl | varchar(500) null | external URL, see open items |
+| CoverType |	varchar(20)	Gradient / Image, default Gradient
+| CoverGradient |	varchar(20)	key from a fixed palette (teal, ocean...) | required
+| CoverIcon |	varchar(30)	key from a fixed icon set (code, database...) | required
+| ThumbnailUrl |	varchar(500) | null	external URL, used when CoverType = Image
 | Level | varchar(20) | Beginner / Intermediate / Advanced |
 | Status | varchar(20) | Draft / Published / Unpublished / Suspended |
 | SuspendedAt | timestamptz null | |

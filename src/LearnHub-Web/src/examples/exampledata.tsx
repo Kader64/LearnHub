@@ -1,9 +1,13 @@
 // EXAMPLE DATA ONLY. This file just feeds the visual components.
 
+import type { CourseCoverData } from "../components/CourseCover";
+
 export type CourseStatus = "Draft" | "Published" | "Unpublished" | "Suspended";
 export type CourseLevel = "Beginner" | "Intermediate" | "Advanced";
 
-export interface Course {
+// Course extends CourseCoverData (coverType, coverGradient, coverIcon, thumbnailUrl),
+// so a course can be passed straight to <CourseCover cover={course} />.
+export interface Course extends CourseCoverData {
   id: string;
   title: string;
   description: string;
@@ -13,7 +17,6 @@ export interface Course {
   lessons: number;
   students: number;
   status: CourseStatus;
-  gradient: string;
 }
 
 // EXAMPLE: courses (GET /api/courses)
@@ -28,7 +31,10 @@ export const courses: Course[] = [
     lessons: 12,
     students: 248,
     status: "Published",
-    gradient: "from-teal-500 to-cyan-600",
+    coverType: "Gradient",
+    coverGradient: "teal",
+    coverIcon: "code",
+    thumbnailUrl: null,
   },
   {
     id: "c2",
@@ -40,7 +46,10 @@ export const courses: Course[] = [
     lessons: 18,
     students: 412,
     status: "Published",
-    gradient: "from-indigo-500 to-sky-600",
+    coverType: "Gradient",
+    coverGradient: "ocean",
+    coverIcon: "code",
+    thumbnailUrl: null,
   },
   {
     id: "c3",
@@ -52,7 +61,10 @@ export const courses: Course[] = [
     lessons: 10,
     students: 187,
     status: "Published",
-    gradient: "from-emerald-500 to-teal-600",
+    coverType: "Gradient",
+    coverGradient: "forest",
+    coverIcon: "database",
+    thumbnailUrl: null,
   },
   {
     id: "c4",
@@ -64,7 +76,10 @@ export const courses: Course[] = [
     lessons: 9,
     students: 0,
     status: "Draft",
-    gradient: "from-orange-500 to-amber-500",
+    coverType: "Gradient",
+    coverGradient: "amber",
+    coverIcon: "science",
+    thumbnailUrl: null,
   },
   {
     id: "c5",
@@ -76,7 +91,10 @@ export const courses: Course[] = [
     lessons: 15,
     students: 64,
     status: "Unpublished",
-    gradient: "from-violet-500 to-fuchsia-600",
+    coverType: "Gradient",
+    coverGradient: "grape",
+    coverIcon: "code",
+    thumbnailUrl: null,
   },
   {
     id: "c6",
@@ -88,17 +106,21 @@ export const courses: Course[] = [
     lessons: 8,
     students: 53,
     status: "Suspended",
-    gradient: "from-rose-500 to-pink-600",
+    coverType: "Gradient",
+    coverGradient: "sunset",
+    coverIcon: "palette",
+    thumbnailUrl: null,
   },
 ];
 
 // EXAMPLE: lessons of one course (GET /api/courses/{id}/lessons)
+// videoUrl is null for text-only lessons.
 export const lessons = [
-  { id: "l1", order: 1, title: "What is .NET?", duration: "8 min", completed: true },
-  { id: "l2", order: 2, title: "Setting up your environment", duration: "12 min", completed: true },
-  { id: "l3", order: 3, title: "Variables and data types", duration: "15 min", completed: false },
-  { id: "l4", order: 4, title: "Control flow", duration: "14 min", completed: false },
-  { id: "l5", order: 5, title: "Methods and classes", duration: "20 min", completed: false },
+  { id: "l1", order: 1, title: "What is .NET?", duration: "8 min", completed: true, videoUrl: "https://example.com/video/what-is-dotnet" as string | null },
+  { id: "l2", order: 2, title: "Setting up your environment", duration: "12 min", completed: true, videoUrl: null as string | null },
+  { id: "l3", order: 3, title: "Variables and data types", duration: "15 min", completed: false, videoUrl: "https://example.com/video/variables" as string | null },
+  { id: "l4", order: 4, title: "Control flow", duration: "14 min", completed: false, videoUrl: null as string | null },
+  { id: "l5", order: 5, title: "Methods and classes", duration: "20 min", completed: false, videoUrl: "https://example.com/video/methods" as string | null },
 ];
 
 // EXAMPLE: categories (GET /api/categories)

@@ -37,7 +37,7 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Welcome />} />
-        <Route path="/verify/:code" element={<Verify />} />
+        <Route path="/verify" element={<Verify />} />
 
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
