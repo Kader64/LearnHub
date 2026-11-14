@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 import "./index.css";
 
 import Welcome from "./pages/Welcome";
@@ -32,45 +32,49 @@ import Categories from "./pages/admin/Categories";
 import AuditLog from "./pages/admin/AuditLog";
 import Verify from "./pages/Verify";
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path="/" element={<Welcome />} />
+      <Route path="/verify" element={<Verify />} />
+
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
+
+      <Route element={<AppLayout />}>
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/courses/:id" element={<CourseDetails />} />
+        <Route path="/my-learning" element={<MyLearning />} />
+        <Route path="/learn/:courseId" element={<Lesson />} />
+        <Route path="/exam/:courseId" element={<Exam />} />
+        <Route path="/exam/:courseId/result" element={<ExamResult />} />
+        <Route path="/certificates" element={<Certificates />} />
+
+        <Route path="/teach/courses" element={<TeacherCourses />} />
+        <Route path="/teach/courses/new" element={<CourseEditor />} />
+        <Route path="/teach/courses/:id" element={<CourseEditor />} />
+        <Route path="/teach/courses/:id/lessons/:lessonId" element={<LessonEditor />} />
+        <Route path="/teach/courses/:id/exam" element={<ExamEditor />} />
+      </Route>
+
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="users" element={<Users />} />
+        <Route path="courses" element={<AdminCourses />} />
+        <Route path="certificates" element={<AdminCertificates />} />
+        <Route path="categories" element={<Categories />} />
+        <Route path="audit" element={<AuditLog />} />
+      </Route>
+
+      <Route path="*" element={<NotFound />} />
+    </>,
+  ),
+);
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/verify" element={<Verify />} />
-
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
-
-        <Route element={<AppLayout />}>
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/courses/:id" element={<CourseDetails />} />
-          <Route path="/my-learning" element={<MyLearning />} />
-          <Route path="/learn/:courseId" element={<Lesson />} />
-          <Route path="/exam/:courseId" element={<Exam />} />
-          <Route path="/exam/:courseId/result" element={<ExamResult />} />
-          <Route path="/certificates" element={<Certificates />} />
-
-          <Route path="/teach/courses" element={<TeacherCourses />} />
-          <Route path="/teach/courses/new" element={<CourseEditor />} />
-          <Route path="/teach/courses/:id" element={<CourseEditor />} />
-          <Route path="/teach/courses/:id/lessons/:lessonId" element={<LessonEditor />} />
-          <Route path="/teach/courses/:id/exam" element={<ExamEditor />} />
-        </Route>
-
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="users" element={<Users />} />
-          <Route path="courses" element={<AdminCourses />} />
-          <Route path="certificates" element={<AdminCertificates />} />
-          <Route path="categories" element={<Categories />} />
-          <Route path="audit" element={<AuditLog />} />
-        </Route>
-
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <RouterProvider router={router} />
   </StrictMode>,
 );

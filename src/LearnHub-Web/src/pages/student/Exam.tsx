@@ -4,6 +4,7 @@ import ExamCancelled from "../../components/exam/ExamCancelled";
 import ExamHeader from "../../components/exam/ExamHeader";
 import ExamIntro from "../../components/exam/ExamIntro";
 import FocusWarningDialog from "../../components/exam/FocusWarningDialog";
+import LeaveExamDialog from "../../components/exam/ExamLeaveDialog";
 import QuestionCard from "../../components/exam/QuestionCard";
 import { examSettings } from "../../components/exam/ExamSettings";
 import SubmitDialog from "../../components/exam/SubmitDialog";
@@ -42,6 +43,7 @@ export default function Exam() {
     if (submitted.current) return;
     submitted.current = true;
     // TODO API: POST /api/attempts/{id}/submit
+    guard.allowLeaving(); // the exam itself navigates away, so don't block it
     navigate(resultPath);
   }
 
@@ -110,6 +112,7 @@ export default function Exam() {
         count={guard.warnings}
         limit={maxFocusLosses}
       />
+      <LeaveExamDialog open={guard.leaveDialogOpen} onStay={guard.stay} onLeave={guard.leaveAnyway} />
       <SubmitDialog
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
 export default function ExamResult() {
-  // The result shows only: score, pass/fail and the pass mark. No per-question data.
+
   return (
-    <div className="mx-auto max-w-md py-12 text-center">
+    <div className="mx-auto max-w-md py-20 text-center">
       {/* VARIANT A (passed) */}
       <p className="text-sm font-bold uppercase tracking-wide text-success">Passed</p>
       <p className="mt-2 text-7xl font-extrabold tracking-tight text-ink">85%</p>
@@ -13,7 +13,7 @@ export default function ExamResult() {
         <Link to="/my-learning" className="btn btn-secondary">Back to my learning</Link>
       </div>
 
-      {/* VARIANT B (failed). Replace variant A with this:
+      {/* VARIANT B (failed).
       <p className="text-sm font-bold uppercase tracking-wide text-danger">Not passed</p>
       <p className="mt-2 text-7xl font-extrabold tracking-tight text-ink">55%</p>
       <p className="mt-3 text-muted">Pass mark is 70%.</p>

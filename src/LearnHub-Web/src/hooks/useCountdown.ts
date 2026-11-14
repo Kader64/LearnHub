@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-/**
- * Counts down to `expiresAt` (ms timestamp) while `active` is true.
- * Calls `onExpire` once when the time runs out. Returns the remaining ms.
- */
 export function useCountdown(expiresAt: number, active: boolean, onExpire: () => void) {
   const [now, setNow] = useState(() => Date.now());
   const onExpireRef = useRef(onExpire);
@@ -13,17 +9,31 @@ export function useCountdown(expiresAt: number, active: boolean, onExpire: () =>
   });
 
   useEffect(() => {
-    if (!active) return;
-    setNow(Date.now());
-    const timer = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(timer);
+    if (!active || expiresAt <= 0) return;
+
+    const current = Date.now();
+    setNow(current);
+
+    const msLeft = expiresAt - current;
+    if (msLeft <= 0) {
+      onExpireRef.current();
+      return;
+    }
+
+    const expireTimeout = setTimeout(() => {
+      setNow(Date.now());
+      onExpireRef.current();
+    }, msLeft);
+
+    const tickInterval = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+
+    return () => {
+      clearTimeout(expireTimeout);
+      clearInterval(tickInterval);
+    };
   }, [active, expiresAt]);
 
-  const remainingMs = Math.max(0, expiresAt - now);
-
-  useEffect(() => {
-    if (active && expiresAt > 0 && remainingMs === 0) onExpireRef.current();
-  }, [active, expiresAt, remainingMs]);
-
-  return remainingMs;
+  return active ? Math.max(0, expiresAt - now) : 0;
 }
