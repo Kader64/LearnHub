@@ -24,7 +24,7 @@ export default function TeacherCourses() {
       </p>
 
       <div className="card overflow-x-auto">
-        <table className="w-full min-w-[640px]">
+        <table className="w-full min-w-160">
           <thead className="table-head">
             <tr>
               <th className="th">Course</th>

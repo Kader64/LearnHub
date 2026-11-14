@@ -90,7 +90,7 @@ export const courses: Course[] = [
     teacher: "Maria Wiśniewska",
     lessons: 15,
     students: 64,
-    status: "Unpublished",
+    status: "Published",
     coverType: "Gradient",
     coverGradient: "grape",
     coverIcon: "code",

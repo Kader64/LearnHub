@@ -1,54 +1,116 @@
-import { Link, useParams } from "react-router-dom";
+import MDEditor from "@uiw/react-md-editor";
+import { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import VideoUrlField from "../../components/lessonEditor/VideoUrlField";
+import { validateVideoUrl } from "../../components/lessonEditor/videoUrl";
 import PageHeader from "../../components/PageHeader";
+import { lessons } from "../../examples/exampledata";
+import { useUnsavedChangesWarning } from "../../hooks/useUnsavedChangesWarning";
+
+// Mock. In the real page the existing lesson comes from the API.
+const EXISTING_LESSON = {
+  title: "Variables and data types",
+  order: "3",
+  content: "## Declaring variables\n\nA variable is a named place in memory.\n\n```csharp\nint age = 25;\n```",
+  videoUrl: "",
+};
 
 export default function LessonEditor() {
-  const { id } = useParams();
+  const { id, lessonId } = useParams(); // id = course id
+  const navigate = useNavigate();
+  const isNew = lessonId === "new";
+  const coursePath = `/teach/courses/${id}`;
+
+  const [initial] = useState(() =>
+    isNew ? { title: "", order: String(lessons.length + 1), content: "", videoUrl: "" } : EXISTING_LESSON,
+  );
+  const [title, setTitle] = useState(initial.title);
+  const [order, setOrder] = useState(initial.order);
+  const [content, setContent] = useState(initial.content);
+  const [videoUrl, setVideoUrl] = useState(initial.videoUrl);
+
+  const videoError = validateVideoUrl(videoUrl);
+  const dirty =
+    title !== initial.title || order !== initial.order || content !== initial.content || videoUrl !== initial.videoUrl;
+  useUnsavedChangesWarning(dirty);
+
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    // TODO API: POST / PUT /api/courses/{id}/lessons
+    navigate(coursePath);
+  }
 
   return (
     <>
-      <PageHeader title="Edit lesson" description="Write the lesson in Markdown. File uploads are not available." />
+      <PageHeader
+        title={isNew ? "New lesson" : "Edit lesson"}
+        description="Write the lesson in Markdown. File uploads are not available."
+      />
 
-      <div className="grid gap-10 lg:grid-cols-2">
-        <section className="space-y-5">
+
+      <form onSubmit={handleSubmit} className="grid gap-10">
+        {/* Below lg only one of the two panels is shown, switched by the tabs above */}
+        <section className={`space-y-5`}>
           <div className="grid gap-5 sm:grid-cols-4">
             <div className="sm:col-span-3">
-              <label className="label">Title</label>
-              <input className="input" defaultValue="Variables and data types" />
+              <label htmlFor="lesson-title" className="label">
+                Title
+              </label>
+              <input
+                id="lesson-title"
+                className="input"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                maxLength={150}
+                required
+              />
             </div>
             <div>
-              <label className="label">Order</label>
-              <input type="number" className="input" defaultValue={3} min={1} />
+              <label htmlFor="lesson-order" className="label">
+                Order
+              </label>
+              <input
+                id="lesson-order"
+                type="number"
+                className="input"
+                value={order}
+                onChange={(e) => setOrder(e.target.value)}
+                min={1}
+                required
+              />
             </div>
           </div>
-          <div>
-            <label className="label">Content (Markdown)</label>
-            <textarea
-              className="input min-h-72 font-mono"
-              defaultValue={"## Declaring variables\n\nA variable is a named place in memory.\n\n```csharp\nint age = 25;\n```"}
+
+          <div data-color-mode="light">
+            <label htmlFor="lesson-content" className="label">
+              Content
+            </label>
+            <MDEditor
+              value={content}
+              onChange={(val) => setContent(val ?? "")}
+              preview="edit"
+              height={320}
+              visibleDragbar={true}
+              textareaProps={{
+                id: "lesson-content",
+                required: true,
+              }}
             />
           </div>
-          <div>
-            <label className="label">Video URL (optional)</label>
-            <input className="input" placeholder="https://www.youtube.com/watch?v=..." />
-            <p className="mt-1.5 text-xs text-muted">Only YouTube and Vimeo links are accepted.</p>
-            {/* ERROR VARIANT (host not on the allowlist):
-            <p className="mt-1.5 text-sm text-danger">This video host is not allowed.</p>
-            */}
-          </div>
-          <div className="flex gap-3">
-            <button className="btn btn-primary">Save lesson</button>
-            <Link to={`/teach/courses/${id}`} className="btn btn-secondary">Cancel</Link>
-          </div>
-        </section>
 
-        {/* Static preview (the real one renders sanitized Markdown) */}
-        <section className="card p-6 lg:self-start">
-          <p className="text-sm font-semibold text-muted">Preview</p>
-          <h2 className="section-title mt-3">Declaring variables</h2>
-          <p className="mt-3">A variable is a named place in memory.</p>
-          <pre className="mt-3 overflow-x-auto rounded-lg bg-ink p-4 text-sm text-page"><code>int age = 25;</code></pre>
+          <VideoUrlField id="lesson-video" value={videoUrl} onChange={setVideoUrl} error={videoError} />
+
+          <div className="flex items-center gap-3">
+            <button type="submit" className="btn btn-primary" disabled={!!videoError}>
+              Save lesson
+            </button>
+            <Link to={coursePath} className="btn btn-secondary">
+              Cancel
+            </Link>
+            {dirty && <span className="text-sm text-muted">Unsaved changes</span>}
+          </div>
         </section>
-      </div>
+      </form>
     </>
   );
 }

@@ -1,7 +1,6 @@
 const styles: Record<string, string> = {
   Draft: "bg-slate-100 text-slate-700",
   Published: "bg-emerald-50 text-emerald-700",
-  Unpublished: "bg-amber-50 text-amber-700",
   Suspended: "bg-red-50 text-red-700",
   Active: "bg-emerald-50 text-emerald-700",
   Disabled: "bg-red-50 text-red-700",
